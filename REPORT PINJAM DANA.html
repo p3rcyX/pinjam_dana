@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Laporan Dana - Luxury</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: linear-gradient(180deg, #0a0a0a, #1a1a2e);
+      color: #ffffff;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+          radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.15) 0%, transparent 40%),
+          radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 40%),
+          radial-gradient(circle at 40% 40%, rgba(0, 122, 255, 0.1) 0%, transparent 40%);
+      z-index: -1;
+    }
+
+    /* Overlay & Modal Luxury */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(15px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .modal {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+      padding: 40px;
+      border-radius: 25px;
+      width: 400px;
+      text-align: center;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      box-shadow: 
+          0 25px 50px rgba(0, 0, 0, 0.5),
+          0 0 70px rgba(255, 215, 0, 0.15),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .modal::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, 
+          transparent, 
+          #ffd700, 
+          #fffacd, 
+          #ffd700, 
+          transparent);
+      opacity: 0.8;
+    }
+
+    .modal h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 28px;
+      color: #ffffff;
+      margin-bottom: 25px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffd700, #fffacd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .modal button {
+      width: 100%;
+      padding: 16px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: #ffffff;
+      box-shadow: 
+          0 8px 20px rgba(40, 167, 69, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 
+          0 12px 25px rgba(40, 167, 69, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #ffffff;
+      box-shadow: 
+          0 8px 20px rgba(99, 102, 241, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-3px);
+      box-shadow: 
+          0 12px 25px rgba(99, 102, 241, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    /* Container Luxury */
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    .headerRow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+      padding: 25px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      border-radius: 20px;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      box-shadow: 
+          0 15px 35px rgba(0, 0, 0, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+    }
+
+    h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 32px;
+      margin: 0 0 10px;
+      color: #ffffff;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffd700, #fffacd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .sub {
+      color: #b8e7ff;
+      margin: 0;
+      font-size: 14px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      letter-spacing: 0.3px;
+    }
+
+    .rightTop {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* Pill Luxury */
+    .pill {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.1));
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      color: #ffffff;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* Switch Button Luxury */
+    .switchBtn {
+      padding: 12px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      border: 2px solid rgba(255, 215, 0, 0.4);
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 250, 205, 0.1));
+      color: #ffd700;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+    }
+
+    .switchBtn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(255, 215, 0, 0.2);
+      border-color: rgba(255, 215, 0, 0.6);
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(255, 250, 205, 0.15));
+    }
+
+    /* Bank Buttons Luxury */
+    .bankButtons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 20px 0 25px;
+      padding: 20px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      border-radius: 20px;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      box-shadow: 
+          0 10px 25px rgba(0, 0, 0, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+    }
+
+    .bankButtons button {
+      padding: 14px 22px;
+      border-radius: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+      color: #ffffff;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+    }
+
+    .bankButtons button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 215, 0, 0.15);
+      border-color: rgba(255, 215, 0, 0.5);
+    }
+
+    .bankButtons button.active {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.6), rgba(139, 92, 246, 0.4));
+      border-color: rgba(255, 215, 0, 0.6);
+      box-shadow: 
+          0 8px 20px rgba(99, 102, 241, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+    }
+
+    /* Card Luxury */
+    .card {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 
+          0 15px 35px rgba(0, 0, 0, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, 
+          transparent, 
+          #ffd700, 
+          #fffacd, 
+          #ffd700, 
+          transparent);
+      opacity: 0.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 720px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    label {
+      font-size: 13px;
+      color: #b8e7ff;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* INPUT STYLING */
+    input {
+      width: 100%;
+      padding: 14px;
+      margin: 6px 0 20px;
+      border-radius: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #ffd700;
+      box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* DROPDOWN STYLING - DIPERBAIKI */
+    .custom-select {
+      width: 100%;
+      padding: 14px;
+      margin: 6px 0 20px;
+      border-radius: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.3);
+      color: #ffffff !important;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .custom-select:focus {
+      outline: none;
+      border-color: #ffd700;
+      box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    /* Opsi di dalam dropdown */
+    .custom-select option {
+      background: #1a1a2e;
+      color: #ffffff !important;
+      padding: 12px;
+    }
+
+    /* Custom arrow untuk dropdown */
+    .custom-select-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .custom-select-wrapper::after {
+      content: '▼';
+      position: absolute;
+      top: 50%;
+      right: 15px;
+      transform: translateY(-50%);
+      color: #ffd700;
+      font-size: 12px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Bank Block Title Luxury */
+    .bankBlockTitle {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      margin: 0 0 20px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      font-size: 18px;
+    }
+
+    .bankBlockTitle span:first-child {
+      background: linear-gradient(135deg, #ffd700, #fffacd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Actions Luxury */
+    .actions {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+    }
+
+    .actions button {
+      padding: 16px 24px;
+      border: none;
+      border-radius: 15px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .confirm {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #052e16;
+      box-shadow: 
+          0 8px 20px rgba(34, 197, 94, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .confirm:hover {
+      transform: translateY(-4px);
+      box-shadow: 
+          0 12px 25px rgba(34, 197, 94, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .reset {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: #ffffff;
+      box-shadow: 
+          0 8px 20px rgba(99, 102, 241, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .reset:hover {
+      transform: translateY(-4px);
+      box-shadow: 
+          0 12px 25px rgba(99, 102, 241, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    /* Result Section Luxury */
+    .resultWrap {
+      margin-top: 30px;
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .result {
+      background: rgba(2, 6, 23, 0.8);
+      padding: 25px;
+      border-radius: 15px;
+      white-space: pre-line;
+      font-family: 'ui-monospace', 'Menlo', 'Consolas', monospace;
+      font-size: 14px;
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      color: #e2e8f0;
+      line-height: 1.6;
+      box-shadow: 
+          0 10px 30px rgba(0, 0, 0, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .resultActions {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      align-items: center;
+    }
+
+    .copyBtn {
+      padding: 16px 24px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 16px;
+      border: 2px solid rgba(255, 215, 0, 0.4);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.6), rgba(139, 92, 246, 0.4));
+      color: #ffffff;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .copyBtn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+      border-color: rgba(255, 215, 0, 0.6);
+    }
+
+    .copyStatus {
+      color: #b8e7ff;
+      font-size: 14px;
+      margin: 0;
+      font-weight: 600;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Toast Luxury */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.95), rgba(30, 41, 59, 0.9));
+      border: 2px solid rgba(255, 215, 0, 0.4);
+      padding: 16px 24px;
+      border-radius: 15px;
+      display: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      color: #ffd700;
+      z-index: 1000;
+      box-shadow: 
+          0 15px 30px rgba(0, 0, 0, 0.5),
+          0 0 40px rgba(255, 215, 0, 0.15);
+      backdrop-filter: blur(20px);
+      animation: slideUp 0.3s ease-out;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
+
+    /* Luxury Border Effect */
+    .luxury-border {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      border: 1px solid rgba(255, 215, 0, 0.1);
+      border-radius: 15px;
+      pointer-events: none;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h3>Pilih Jenis Laporan</h3>
+    <button class="btn-primary" onclick="setMode('Peminjaman Dana', true)">PEMINJAMAN DANA</button>
+    <button class="btn-secondary" onclick="setMode('Pengembalian Dana', true)">PENGEMBALIAN DANA</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="headerRow">
+    <div>
+      <h2 id="title">Laporan Dana</h2>
+      <p class="sub">Pilih jumlah bank (1–5), isi form, lalu klik Confirm. Setelah itu bisa Copy.</p>
+    </div>
+
+    <div class="rightTop">
+      <div class="pill" id="modePill">Mode: -</div>
+      <button class="switchBtn" id="switchBtn" onclick="toggleMode()" style="display:none;">
+        Ganti Mode
+      </button>
+    </div>
+  </div>
+
+  <div class="bankButtons" id="bankButtons"></div>
+
+  <div class="card">
+    <div class="luxury-border"></div>
+    <div class="grid">
+      <div>
+        <label>Dari Situs</label>
+        <input id="situs" placeholder="BOSJOKO" />
+      </div>
+      <div>
+        <label>(Opsional) Catatan</label>
+        <input id="catatan" placeholder="Contoh: urgent / hari ini" />
+      </div>
+    </div>
+
+    <div id="bankForms"></div>
+
+    <div class="actions">
+      <button class="confirm" onclick="generate()">Confirm</button>
+      <button class="reset" onclick="resetAll()">Reset</button>
+    </div>
+  </div>
+
+  <div class="resultWrap" id="resultWrap">
+    <div class="result" id="result"></div>
+    <div class="resultActions">
+      <button class="copyBtn" onclick="copyResult()">Copy</button>
+      <p class="copyStatus" id="copyStatus"></p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Tercopy ✅</div>
+
+<script>
+  let perihal = "";
+  let bankCount = 1;
+
+  const BANK_OPTIONS = ["BCA","BNI","BRI","MANDIRI","DANAMON","SINARMAS"];
+  const NOMINAL_OPTIONS = [
+    { value: 20000000, label: "20,000,000" },
+    { value: 30000000, label: "30,000,000" },
+    { value: 50000000, label: "50,000,000" },
+    { value: 100000000, label: "100,000,000" },
+  ];
+
+  function setMode(mode, fromOverlay=false){
+    perihal = mode;
+    document.getElementById("title").innerText = mode;
+    document.getElementById("modePill").innerText = "Mode: " + mode;
+
+    const switchBtn = document.getElementById("switchBtn");
+    switchBtn.style.display = "inline-block";
+    switchBtn.textContent = (mode === "Peminjaman Dana") ? "Ganti ke Pengembalian" : "Ganti ke Peminjaman";
+
+    if (fromOverlay) document.getElementById("overlay").style.display = "none";
+
+    renderBankButtons();
+    renderBankForms();
+  }
+
+  function toggleMode(){
+    if (perihal === "Peminjaman Dana") setMode("Pengembalian Dana", false);
+    else setMode("Peminjaman Dana", false);
+  }
+
+  function formatRupiah(n) { return Number(n).toLocaleString("en-US"); }
+
+  function renderBankButtons() {
+    const wrap = document.getElementById("bankButtons");
+    wrap.innerHTML = "";
+    for (let i = 1; i <= 5; i++) {
+      const btn = document.createElement("button");
+      btn.textContent = i + " Bank";
+      btn.className = (i === bankCount) ? "active" : "";
+      btn.onclick = () => {
+        bankCount = i;
+        renderBankButtons();
+        renderBankForms();
+        hideResult();
+      };
+      wrap.appendChild(btn);
+    }
+  }
+
+  function makeSelect(options, id) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "custom-select-wrapper";
+    
+    const select = document.createElement("select");
+    select.id = id;
+    select.className = "custom-select";
+    
+    options.forEach(opt => {
+      const o = document.createElement("option");
+      o.value = opt.value ?? opt;
+      o.textContent = opt.label ?? opt;
+      select.appendChild(o);
+    });
+    
+    wrapper.appendChild(select);
+    return wrapper;
+  }
+
+  function renderBankForms() {
+    const container = document.getElementById("bankForms");
+    container.innerHTML = "";
+
+    for (let i = 1; i <= bankCount; i++) {
+      const block = document.createElement("div");
+      block.className = "card";
+      block.style.marginTop = "20px";
+      block.style.position = "relative";
+
+      const luxuryBorder = document.createElement("div");
+      luxuryBorder.className = "luxury-border";
+      block.appendChild(luxuryBorder);
+
+      const title = document.createElement("div");
+      title.className = "bankBlockTitle";
+      title.innerHTML = `<span>Data Bank ${i}</span><span class="pill">Lampiran ${i}</span>`;
+      block.appendChild(title);
+
+      const grid = document.createElement("div");
+      grid.className = "grid";
+
+      const bankWrap = document.createElement("div");
+      bankWrap.appendChild(Object.assign(document.createElement("label"), { textContent: "Bank" }));
+      const bankSelectWrapper = makeSelect(BANK_OPTIONS, `bank_${i}`);
+      bankWrap.appendChild(bankSelectWrapper);
+
+      const nominalWrap = document.createElement("div");
+      nominalWrap.appendChild(Object.assign(document.createElement("label"), { textContent: "Nominal" }));
+      const nominalSelectWrapper = makeSelect(NOMINAL_OPTIONS, `nominal_${i}`);
+      nominalWrap.appendChild(nominalSelectWrapper);
+
+      const namaWrap = document.createElement("div");
+      namaWrap.appendChild(Object.assign(document.createElement("label"), { textContent: "Nama Rekening" }));
+      const namaInput = document.createElement("input");
+      namaInput.id = `nama_${i}`;
+      namaInput.placeholder = "AYU NINGSI";
+      namaWrap.appendChild(namaInput);
+
+      const rekWrap = document.createElement("div");
+      rekWrap.appendChild(Object.assign(document.createElement("label"), { textContent: "Nomor Rekening" }));
+      const rekInput = document.createElement("input");
+      rekInput.id = `rekening_${i}`;
+      rekInput.placeholder = "12345678";
+      rekInput.inputMode = "numeric";
+      rekWrap.appendChild(rekInput);
+
+      grid.appendChild(bankWrap);
+      grid.appendChild(nominalWrap);
+      grid.appendChild(namaWrap);
+      grid.appendChild(rekWrap);
+
+      block.appendChild(grid);
+      container.appendChild(block);
+    }
+  }
+
+  function generate() {
+    const situs = document.getElementById("situs").value || "-";
+    const catatan = document.getElementById("catatan").value || "";
+
+    let blocks = "";
+    for (let i = 1; i <= bankCount; i++) {
+      const bank = document.getElementById(`bank_${i}`).value;
+      const nominal = document.getElementById(`nominal_${i}`).value;
+      const nama = document.getElementById(`nama_${i}`).value || "-";
+      const rekening = document.getElementById(`rekening_${i}`).value || "-";
+
+      blocks +=
+`\nBANK ${bank} (KAS BERSIH)
+Nama Rekening : ${nama}
+Nomor Rekening : ${rekening}
+Nomimal : Rp. ${formatRupiah(nominal)}\n`;
+    }
+
+    const text =
+`Info : HOKIJITU
+Perihal : ${perihal}
+Dari Situs : ${situs}${catatan ? "\nCatatan : " + catatan : ""}
+
+${blocks.trim()}`;
+
+    const resultWrap = document.getElementById("resultWrap");
+    const result = document.getElementById("result");
+    const copyStatus = document.getElementById("copyStatus");
+
+    result.textContent = text;
+    resultWrap.style.display = "block";
+    copyStatus.textContent = "Siap dicopy.";
+  }
+
+  function hideResult(){
+    const resultWrap = document.getElementById("resultWrap");
+    const result = document.getElementById("result");
+    const copyStatus = document.getElementById("copyStatus");
+    resultWrap.style.display = "none";
+    result.textContent = "";
+    copyStatus.textContent = "";
+  }
+
+  async function copyResult(){
+    const text = document.getElementById("result").textContent || "";
+    const copyStatus = document.getElementById("copyStatus");
+
+    if (!text.trim()) {
+      copyStatus.textContent = "Belum ada hasil. Klik Confirm dulu.";
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(text);
+      copyStatus.textContent = "Tercopy ✅ (silakan paste)";
+      showToast("Tercopy ✅");
+    } catch (e) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      copyStatus.textContent = "Tercopy ✅ (mode fallback)";
+      showToast("Tercopy ✅");
+    }
+  }
+
+  function showToast(msg){
+    const toast = document.getElementById("toast");
+    toast.textContent = msg;
+    toast.style.display = "block";
+    setTimeout(() => toast.style.display = "none", 1200);
+  }
+
+  function resetAll() {
+    document.getElementById("situs").value = "";
+    document.getElementById("catatan").value = "";
+    bankCount = 1;
+    renderBankButtons();
+    renderBankForms();
+    hideResult();
+  }
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+      document.querySelector('.overlay').style.animation = 'fadeIn 0.4s ease-out';
+    }, 100);
+  });
+</script>
+
+</body>
+</html>
